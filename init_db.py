@@ -1,10 +1,11 @@
 import psycopg2
+from conf import DATABASE
 
 connection = psycopg2.connect(
-    host='localhost',
-    database='semester_site',
-    user='postgres',
-    password='BARSIKETOZLO'
+    host=DATABASE['host'],
+    database=DATABASE['database'],
+    user=DATABASE['user'],
+    password=DATABASE['password']
 )
 
 cur = connection.cursor()
