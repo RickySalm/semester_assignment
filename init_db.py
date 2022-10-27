@@ -58,6 +58,36 @@ cur.execute('CREATE TABLE IF NOT EXISTS favorite_recipe('
             ');'
             )
 
+
+def fill_users(num):
+    """
+    Creates the required number of users
+    :param num: number of users
+    :return: inserts user data into the DB
+    """
+    for i in range(1, num+1):
+        email = str(i) + '@mail.ru'
+        password = str(i)
+        user_name = 'user' + str(i)
+        cur.execute('INSERT INTO user_site (user_name, email, password) VALUES (%s, %s, %s)',
+                    (user_name, email, password))
+
+def fill_recipe():
+    """
+    Fills recipes based on existing users
+    :return: inserts recipe data into the DB
+    """
+    cur.execute('SELECT id FROM user_site')
+    users = cur.fetchall()
+    for id in users:
+        cur.execute('INSERT INTO recipe (name, addition, number_of_serving, cooking_hour, cooking_minute, user_site_id)'
+                    'VALUES (%s, %s, %s, %s, %s, %s)',
+                    ('recipe user'+str(id[0]), '12Lorem ipsum dolor sit amet', 2, id[0]+1, id[0]+20, id[0])
+                    )
+
+
+# fill_users(10)
+fill_recipe()
 connection.commit()
 cur.close()
 connection.close()
