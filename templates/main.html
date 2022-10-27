@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    Рецепты от вани
+{% endblock %}
+
+{% block content %}
+    <h1>Рецепты</h1>
+    {% for recipe in recipes %}
+        <h3>{{ recipe.name }}</h3>
+        <p>Кол-во порций: {{ recipe.number_of_serving }}</p>
+        <p>Время готовки: {{ recipe.cooking_hour }}:{{ recipe.cooking_minute }}</p>
+    {% endfor %}
+{% endblock %}
