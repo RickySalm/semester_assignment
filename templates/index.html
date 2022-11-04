@@ -7,6 +7,14 @@
 </head>
 <body>
 <h4><a href="{{ url_for('main') }}">home</a></h4>
+{% if session.get('auth')%}
+    <h4><a href="{{ url_for('logout') }}">logout</a></h4>
+{% else %}
+    <h4><a href="{{ url_for('signup') }}">signup</a></h4>
+    <h4><a href="{{ url_for('login') }}">login</a></h4>
+{% endif %}
+<p>Привет</p>
+<h1></h1>
 {% block content %}
 {% endblock %}
 </body>
