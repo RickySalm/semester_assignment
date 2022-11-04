@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h3>Your new recipe:</h3>
+    <div>
+        <form>
+            <div>
+                <input type="text" name="name_recipe" placeholder="Name of the recipe">
+            </div>
+            <div>
+                <label>number of servings</label>
+                <input type="number" value="1" step="1" name="number_of_serving">
+            </div>
+            <div>
+                <label>cooking time</label>
+                <div>
+                    <input type="number" value="0" step="1" name="cooking_hour"><p>hours</p>
+                </div>
+                <div>
+                    <input type="number" value="0" step="1" name="cooking_minute"><p>minutes</p>
+                </div>
+            </div>
+            <div>
+                <label>addition</label>
+                <input type="text" name="addition">
+            </div>
+            <div>
+                <h4>Ingredients</h4>
+                <div>
+                    <label>Name of the ingredient</label>
+                    <input type="text" name="name_ingredient">
+                </div>
+                <div>
+                    <label>Quantity</label>
+                    <input type="number" name="quantity_ingredient">
+                </div>
+                <div>
+                    <label>Measure unit</label>
+                    <input type="text" name="measure_unit">
+                </div>
+            </div>
+            <div>
+                <h4>Step-by-step instructions</h4>
+                <div>
+                    <label>Image</label>
+                    <input type="image" name="quantity_ingredient">
+                </div>
+                <div>
+                    <label>Text</label>
+                    <input type="text" name="text">
+                </div>
+            </div>
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+{% endblock %}
