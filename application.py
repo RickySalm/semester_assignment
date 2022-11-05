@@ -41,20 +41,29 @@ def logout():
 def login():
 	#TODO добавить флеши сообщения если что-то не введено
 	if request.method == 'POST':
+		# Берем из формы логин и пароль
 		login = request.form.get('login')
 		password = request.form.get('password')
 
+		# соединение с БД
 		con = connect_db()
 		cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
+		# запрос в БД
 		cur.execute('SELECT * FROM user_site WHERE user_name=%s', (login,))
 		user = cur.fetchone()
 		print()
 		print(password)
+		# если пользователь есть в БД и пароль совпадает,
+		# в сессии указываем, что пользователь авторизован,
+		# закрываем соединение с БД и переходим на главную страницу
 		if user and bcrypt.check_password_hash(user['password'], password):
 			session['auth'] = True
 			cur.close()
 			con.close()
 			return redirect('main')
+		# Если пользователя нет в БД или пароль не совпадает,
+		# оставляем на той же странице и предупреждаем что авторизация не удалась
+		# TODO сделать сообщение, что вход не удался
 		cur.close()
 		con.close()
 	return render_template('login.html')
@@ -90,6 +99,7 @@ def signup():
 
 @app.route('/user')
 def user():
+	#TODO доделать user и улучшить проверку по sessions(до конца понять детали)
 	if 'login' in session and session['auth']:
 		return render_template('user.html')
 	return redirect('signup')
@@ -100,8 +110,33 @@ def user():
 # 	return render_template()
 
 
-@app.route('/add_recipe')
+@app.route('/add_recipe', methods=['POST', 'GET'])
 def add_recipe():
+	if not session.get('auth'):
+		return redirect('signup')
+	elif request.method == 'POST':
+		#TODO отправка форм в бд
+		#TODO название не должно быть пустым
+		#TODO минуты тоже не ложны быть пустыми
+
+		#TODO сначала заполняем в БД рецепт, потом ингредиенты,
+		# потом просматриваем request.files на наличие фото и с этими фото заполняем
+		# шаги. Если все ок отправляем на страницу модерации
+		name_recipe = request.form.get('name_recipe')
+		addition = request.form.get('addition')
+		number_of_serving = request.form.get('number_of_serving')
+		cooking_hour = request.form.get('cooking_hour')
+		cooking_minute = request.form.get('cooking_minute')
+
+
+		name_ingredient = request.form.get('name_ingredient')
+		measure_unit = request.form.get('measure_unit')
+		quantity_ingredient = request.form.get('quantity_ingredient')
+
+
+		text_step = request.form.get('text_step')
+
+		# print(name_recipe,number_of_serving,cooking_hour,cooking_minute,addition,name_ingredient,quantity_ingredient,measure_unit,text_step)
 	return render_template('add_recipe.html')
 
 @app.route('/')
