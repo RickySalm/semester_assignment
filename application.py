@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, url_for, session, request, redirect
+from flask import Flask, render_template, url_for, session, request, redirect, json
 from flask_session import Session
 from conf import DATABASE
 import psycopg2
@@ -122,6 +122,14 @@ def add_recipe():
 		#TODO сначала заполняем в БД рецепт, потом ингредиенты,
 		# потом просматриваем request.files на наличие фото и с этими фото заполняем
 		# шаги. Если все ок отправляем на страницу модерации
+
+		#TODO добавить значение по вкусу, тогда значения кол-во убирается
+
+		#TODO при обновлении страницы, отправляется форма, исправить
+
+		#TODO в ингредиентах кол-во и единица измерения появлентся только тогда когда заполнен name
+
+		# Могут быть пустыми( )
 		name_recipe = request.form.get('name_recipe')
 		addition = request.form.get('addition')
 		number_of_serving = request.form.get('number_of_serving')
@@ -138,15 +146,17 @@ def add_recipe():
 		id_recipe = cur.fetchone()['id']
 		con.commit()
 
-		name_ingredient = request.form.get('name_ingredient')
-		measure_unit = request.form.get('measure_unit')
-		quantity_ingredient = request.form.get('quantity_ingredient')
+		name_ingredient = request.form.getlist('name_ingredient[]')
+		measure_unit = request.form.get('measure_unit[]')
+		quantity_ingredient = request.form.getlist('quantity_ingredient[]')
 
-		cur.execute('INSERT INTO ingredients (name, measure_unit, quantity, recipe_id)'
-					'VALUES (%s, %s, %s, %s)',
-					(name_ingredient, measure_unit, quantity_ingredient, id_recipe)
-					)
-		con.commit()
+
+		# for i in
+		# 	cur.execute('INSERT INTO ingredients (name, measure_unit, quantity, recipe_id)'
+		# 				'VALUES (%s, %s, %s, %s)',
+		# 				(name_ingredient, measure_unit, quantity_ingredient, id_recipe)
+		# 				)
+		# 	con.commit()
 
 		text_step = request.form.getlist('text_step[]')
 

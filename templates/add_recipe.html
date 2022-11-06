@@ -1,72 +1,97 @@
 {% extends 'index.html' %}
 
 {% block content %}
+    <div class="ms-3">
+        <h3>Your new recipe:</h3>
+    </div>
+    <div class="ms-3">
+        <form enctype="text/plain" method="post">
+            <div>
+                <div class="col-md-4 mb-3">
+                    <input required class="form-control" type="text" name="name_recipe" placeholder="Name of the recipe">
+                </div>
+                <span>number of servings</span>
+                <div class="input-group mb-3">
+                    <div>
+                        <input readonly class="input_number_of_serving form-control" min='0' type="number" value="1" step="1" name="number_of_serving">
+                        <button class="button_del_serving btn btn-outline-secondary" type="button"> - </button>
+                        <button class="button_add_serving btn btn-outline-secondary" type="button"> + </button>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <h4>cooking time</h4>
+                    <div class="col-1">
+                        <p>hours</p>
+                        <input class="form-control" min='0' max="24" type="number" value="0" step="1" name="cooking_hour">
+                    </div>
+                    <div class="col-1">
+                        <p>minutes</p>
+                        <input class="form-control" min='1' max="59" type="number" value="0" step="1" name="cooking_minute">
+                    </div>
+                </div>
+                <div class="mb-3 col-4">
+                    <label>addition</label>
+                    <textarea class="form-control" type="text" name="addition"></textarea>
+                </div>
+            </div>
 
-    <h3>Your new recipe:</h3>
-    <div>
-        <form method="post">
-            <div>
-                <input required type="text" name="name_recipe" placeholder="Name of the recipe">
-            </div>
-            <div>
-                <label>number of servings</label>
-                <button class="button_del_serving" type="button"> - </button>
-                <input readonly class="input_number_of_serving" min='0' type="number" value="1" step="1" name="number_of_serving">
-                <button class="button_add_serving" type="button"> + </button>
-            </div>
-            <div>
-                <label>cooking time</label>
-                <div>
-                    <input min='0' type="number" value="0" step="1" name="cooking_hour"><p>hours</p>
-                </div>
-                <div>
-                    <input min='1' type="number" value="0" step="1" name="cooking_minute"><p>minutes</p>
-                </div>
-            </div>
-            <div>
-                <label>addition</label>
-                <input type="text" name="addition">
-            </div>
-            <div>
+            <div class="h4 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+
+            <div class="block_ingredient_to_add mt-5 mb-3">
                 <h4>Ingredients</h4>
-                <div>
-                    <label>Name of the ingredient</label>
-                    <input type="text" name="name_ingredient">
-                </div>
-                <div>
-                    <label>Quantity</label>
-                    <input min='0' type="number" name="quantity_ingredient">
-                </div>
-                <div>
-                    <label>Measure unit</label>
-                    <select name="measure_unit">
-                        <option value="g">g</option>
-                        <option value="kg">kg</option>
-                        <option value="ml">ml</option>
-                        <option value="liter(s)">liter(s)</option>
-                        <option value="tbsp">tbsp</option>
-                        <option value="glass">glass</option>
-                        <option value="tsp">tsp</option>
-                    </select>
+                <div class="ingredient row g-3">
+                    <div class="col">
+                        <label>Name of the ingredient</label>
+                        <input class="input_name_ingredient form-control" type="text" name="name_ingredient[]">
+                    </div>
+                    <div class="col">
+                        <label>Quantity</label>
+                        <input class="input_quantity_ingredient form-control" min='0' type="number" name="quantity_ingredient[]">
+                    </div>
+                    <div class="col">
+                        <label>Measure unit</label>
+                        <select class="form-control" name="measure_unit[]">
+                            <option value="pcs">pcs</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">ml</option>
+                            <option value="liter(s)">liter(s)</option>
+                            <option value="tbsp">tbsp</option>
+                            <option value="glass">glass</option>
+                            <option value="tsp">tsp</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="block_to_add">
+            <div class="mb-3">
+                <button class="button_add_ingredient">
+                    Add ingredient
+                </button>
+            </div>
+
+            <div class="h4 pb-2 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+
+            <div class="block_step_to_add mb-5 mt-5">
                 <h4>Step-by-step instructions</h4>
-                <div class="step">
+                <div class="step row g-3">
                     <div class=step_div>
                         <span class="step_span">Step 1</span>
                     </div>
-                    <div>
+                    <div class="mb-3 col">
                         <label>Image</label>
-                        <input type="file" accept="image/*" name="image_step[]">
+                        <input class="form-control" type="file" accept="image/*" name="image_step[]">
                     </div>
-                    <div>
+                    <div class="col">
                         <label>Text</label>
-                        <input type="text" name="text_step[]">
+                        <textarea class="form-control" type="text" name="text_step[]"></textarea>
                     </div>
                 </div>
             </div>
-
+            <div>
+                <button class="button_add_step">
+                    Add step
+                </button>
+            </div>
             <button type="submit">Send</button>
         </form>
     </div>
@@ -74,25 +99,25 @@
             $(document).ready(function() {
                 var count = 1;
 
-                $(".button_add_step").click(function(e) {
+                $('.button_add_step').click(function(e) {
                     e.preventDefault();
                     count++;
-                    $('.block_to_add').append('                <div class="step">\n' +
+                    $('.block_step_to_add').append('                <div class="step row g-3">\n' +
             '                    <div class=step_div>' +
             '                        <span class="step_span" >Step ' + count + '</span>' +
             '                    </div>' +
-            '                    <div>\n' +
+            '                    <div class="mb-3 col">\n' +
             '                        <label>Image</label>\n' +
-            '                        <input type="file" accept="image/*" name="image_step[]">\n' +
+            '                        <input class="form-control" type="file" accept="image/*" name="image_step[]">\n' +
             '                    </div>\n' +
-            '                    <div>\n' +
+            '                    <div class="col">\n' +
             '                        <label>Text</label>\n' +
-            '                        <input type="text" name="text_step[]">\n' +
+            '                        <textarea class="form-control" type="text" name="text_step[]"></textarea>\n' +
             '                    </div><button type="button" class="remove_button">Удалить</button>\n' +
             '                </div>');
                 });
 
-                $('.block_to_add').on('click', '.remove_button', function (e) {
+                $('.block_step_to_add').on('click', '.remove_button', function (e) {
                     e.preventDefault();
                     count--;
                     $(this).parent('div').remove();
@@ -115,10 +140,49 @@
                         $('.input_number_of_serving').val(value);
                     }
                 })
+
+                $('.button_add_ingredient').click(function(e){
+                    e.preventDefault();
+                    $('.block_ingredient_to_add').append('<div class="ingredient row g-3">\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Name of the ingredient</label>\n' +
+        '                        <input class="form-control" type="text" name="name_ingredient[]">\n' +
+        '                    </div>\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Quantity</label>\n' +
+        '                        <input class="form-control" min=\'0\' type="number" name="quantity_ingredient[]">\n' +
+        '                    </div>\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Measure unit</label>\n' +
+        '                        <select class="form-control" name="measure_unit[]">\n' +
+        '                            <option value="pcs">pcs</option>\n' +
+        '                            <option value="g">g</option>\n' +
+        '                            <option value="kg">kg</option>\n' +
+        '                            <option value="ml">ml</option>\n' +
+        '                            <option value="liter(s)">liter(s)</option>\n' +
+        '                            <option value="tbsp">tbsp</option>\n' +
+        '                            <option value="glass">glass</option>\n' +
+        '                            <option value="tsp">tsp</option>\n' +
+        '                        </select>\n' +
+        '                    </div>\n' +
+        '                        <button type="button" class="remove_button">Delete</button>\n' +
+        '                </div>')
+                });
+
+                $('.block_ingredient_to_add').on('click', '.remove_button', function (e) {
+                    e.preventDefault();
+                    $(this).parent('div').remove();
+                })
+
+                $('.input_name_ingredient').on('change', function () {
+                    if ($(this).val()){
+                        $('.input_quantity_ingredient').disabled;
+                    }
+                    else {
+                        $('.input_quantity_ingredient').enable;
+                    }
+                })
             });
         </script>
 
-        <button class="button_add_step">
-            Add step
-        </button>
 {% endblock %}
