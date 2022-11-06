@@ -10,7 +10,9 @@
             </div>
             <div>
                 <label>number of servings</label>
-                <input min='0' type="number" value="1" step="1" name="number_of_serving">
+                <button class="button_del_serving" type="button"> - </button>
+                <input readonly class="input_number_of_serving" min='0' type="number" value="1" step="1" name="number_of_serving">
+                <button class="button_add_serving" type="button"> + </button>
             </div>
             <div>
                 <label>cooking time</label>
@@ -51,13 +53,16 @@
             <div class="block_to_add">
                 <h4>Step-by-step instructions</h4>
                 <div class="step">
+                    <div class=step_div>
+                        <span class="step_span">Step 1</span>
+                    </div>
                     <div>
                         <label>Image</label>
-                        <input type="file" accept="image/*" name="image_step">
+                        <input type="file" accept="image/*" name="image_step[]">
                     </div>
                     <div>
                         <label>Text</label>
-                        <input type="text" name="text_step">
+                        <input type="text" name="text_step[]">
                     </div>
                 </div>
             </div>
@@ -67,28 +72,53 @@
     </div>
         <script type="text/javascript">
             $(document).ready(function() {
-                $(".add_step").click(function(e) {
+                var count = 1;
+
+                $(".button_add_step").click(function(e) {
                     e.preventDefault();
+                    count++;
                     $('.block_to_add').append('                <div class="step">\n' +
+            '                    <div class=step_div>' +
+            '                        <span class="step_span" >Step ' + count + '</span>' +
+            '                    </div>' +
             '                    <div>\n' +
             '                        <label>Image</label>\n' +
-            '                        <input type="file" accept="image/*" name="image_step">\n' +
+            '                        <input type="file" accept="image/*" name="image_step[]">\n' +
             '                    </div>\n' +
             '                    <div>\n' +
             '                        <label>Text</label>\n' +
-            '                        <input type="text" name="text_step">\n' +
+            '                        <input type="text" name="text_step[]">\n' +
             '                    </div><button type="button" class="remove_button">Удалить</button>\n' +
             '                </div>');
                 });
 
                 $('.block_to_add').on('click', '.remove_button', function (e) {
                     e.preventDefault();
+                    count--;
                     $(this).parent('div').remove();
+                    for (var i = 0; i < count; i++) {
+                        var j = i+1
+                        $('.step_span').eq(i).text('Step ' + j)
+                    }
+                })
+
+                $('.button_add_serving').click(function() {
+                    var value = $('.input_number_of_serving').val();
+                    value++;
+                    $('.input_number_of_serving').val(value);
+                })
+
+                $('.button_del_serving').click(function() {
+                    var value = $('.input_number_of_serving').val();
+                    if (value > 1) {
+                        value--;
+                        $('.input_number_of_serving').val(value);
+                    }
                 })
             });
         </script>
 
-        <button class="add_step">
+        <button class="button_add_step">
             Add step
         </button>
 {% endblock %}
