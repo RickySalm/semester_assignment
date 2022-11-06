@@ -33,8 +33,8 @@ def connect_db():
 
 @app.route('/logout')
 def logout():
-	# session['auth'] = None
-	session.clear()
+	session['auth'] = False
+	# session.clear()
 	return redirect('/')
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -51,8 +51,6 @@ def login():
 		# запрос в БД
 		cur.execute('SELECT * FROM user_site WHERE user_name=%s', (login,))
 		user = cur.fetchone()
-		print()
-		print(password)
 		# если пользователь есть в БД и пароль совпадает,
 		# в сессии указываем, что пользователь авторизован,
 		# закрываем соединение с БД и переходим на главную страницу
@@ -60,12 +58,14 @@ def login():
 			session['auth'] = True
 			cur.close()
 			con.close()
+			print(session.get('id'))
 			return redirect('main')
 		# Если пользователя нет в БД или пароль не совпадает,
 		# оставляем на той же странице и предупреждаем что авторизация не удалась
 		# TODO сделать сообщение, что вход не удался
 		cur.close()
 		con.close()
+
 	return render_template('login.html')
 
 
@@ -79,14 +79,14 @@ def signup():
 		password2 = request.form.get('password2')
 
 		con = connect_db()
-		cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+		cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cur.execute('SELECT * FROM user_site WHERE user_name=%s', (login,))
 		user = cur.fetchall()
-		print(user)
 		if not user and password1 == password2:
 			pw_hash = bcrypt.generate_password_hash(password1).decode('utf8')
-			cur.execute('INSERT INTO user_site (email, user_name, password) VALUES (%s, %s, %s)', ('email', login, pw_hash))
-			session['login'] = login
+			cur.execute('INSERT INTO user_site (email, user_name, password) VALUES (%s, %s, %s) RETURNING id', ('email', login, pw_hash))
+			id_user = cur.fetchone()
+			session['id'] = id_user['id']
 			session['auth'] = True
 			con.commit()
 			cur.close()
@@ -100,7 +100,7 @@ def signup():
 @app.route('/user')
 def user():
 	#TODO доделать user и улучшить проверку по sessions(до конца понять детали)
-	if 'login' in session and session['auth']:
+	if session.get('auth') == True:
 		return render_template('user.html')
 	return redirect('signup')
 
@@ -128,15 +128,40 @@ def add_recipe():
 		cooking_hour = request.form.get('cooking_hour')
 		cooking_minute = request.form.get('cooking_minute')
 
+		con = connect_db()
+		cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+		cur.execute('INSERT INTO recipe (name, addition, number_of_serving, cooking_hour, cooking_minute, user_site_id)'
+					'VALUES (%s, %s, %s, %s, %s, %s) RETURNING id',
+					(name_recipe, addition, number_of_serving, cooking_hour, cooking_minute, session.get('id'))
+					)
+		id_recipe = cur.fetchone()['id']
+		con.commit()
 
 		name_ingredient = request.form.get('name_ingredient')
 		measure_unit = request.form.get('measure_unit')
 		quantity_ingredient = request.form.get('quantity_ingredient')
 
+		cur.execute('INSERT INTO ingredients (name, measure_unit, quantity, recipe_id)'
+					'VALUES (%s, %s, %s, %s)',
+					(name_ingredient, measure_unit, quantity_ingredient, id_recipe)
+					)
+		con.commit()
 
-		text_step = request.form.get('text_step')
+		text_step = request.form.getlist('text_step[]')
 
-		# print(name_recipe,number_of_serving,cooking_hour,cooking_minute,addition,name_ingredient,quantity_ingredient,measure_unit,text_step)
+		for i in text_step:
+			cur.execute('INSERT INTO steps (text, recipe_id)'
+						'VALUES (%s, %s)',
+						(i, id_recipe)
+						)
+
+		con.commit()
+
+		cur.close()
+		con.close()
+
+		print(name_recipe,number_of_serving,cooking_hour,cooking_minute,addition,name_ingredient,quantity_ingredient,measure_unit,text_step)
 	return render_template('add_recipe.html')
 
 @app.route('/')
