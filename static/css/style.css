@@ -1,3 +1,9 @@
 body {
     background-color: gray;
 }
+
+.input_number_of_serving::-webkit-inner-spin-button,
+.input_number_of_serving::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
