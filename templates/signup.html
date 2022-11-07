@@ -1,15 +1,28 @@
 {% extends 'index.html' %}
 
 {% block content %}
+
     <div>
-        <form method="post">
-            <label>login
-            <input type="text" name="login"></label>
-            <label>password
-            <input type="password" name="password1"></label>
-            <label>password
-            <input type="password" name="password2"></label>
-            <button type="submit">SignUp</button>
+        <form class="row g-3" method="post" action="{{ url_for('signup') }}">
+            <div class="mb-3">
+                <label for="InputUserName" class="form-label">Никнейм</label>
+                <input type="text" class="form-control" name="user_name" id="InputUserName">
+            </div>
+            <div class="mb-3">
+               <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+               <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+               <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+            </div>
+            <div class="mb-3 col-md-6">
+               <label for="exampleInputPassword1" class="form-label">Пароль</label>
+               <input name="password1" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-3 col-md-6">
+               <label for="exampleInputPassword1" class="form-label">Пароль</label>
+               <input name="password2" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
         </form>
     </div>
+
 {% endblock %}
