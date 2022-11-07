@@ -44,14 +44,15 @@ def login():
 	#TODO добавить флеши сообщения если что-то не введено
 	if request.method == 'POST':
 		# Берем из формы логин и пароль
-		username = request.form.get('username')
+		user_name = request.form.get('user_name')
+		email = request.form.get('email')
 		password = request.form.get('password')
 
 		# соединение с БД
 		con = connect_db()
 		cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		# запрос в БД
-		cur.execute('SELECT * FROM user_site WHERE user_name=%s', (username,))
+		cur.execute('SELECT * FROM user_site WHERE user_name=%s and email=%s', (user_name, email))
 		user = cur.fetchone()
 		# если пользователь есть в БД и пароль совпадает,
 		# в сессии указываем, что пользователь авторизован,
@@ -66,7 +67,6 @@ def login():
 		# TODO сделать сообщение, что вход не удался
 		cur.close()
 		con.close()
-
 	return render_template('login.html')
 
 

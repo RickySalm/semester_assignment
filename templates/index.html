@@ -11,6 +11,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+<! Navbar----------------------------->
+
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('main') }}">Blog</a>
@@ -19,21 +21,130 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+
                 <a class="nav-link active" aria-current="page" href="{{ url_for('main') }}">Main page</a>
                 <a class="nav-link active" href="{{ url_for ('add_recipe') }}">Add recipe</a>
                 <a class="nav-link active" href="{{ url_for ('profile') }}">Profile</a>
                 {% if session.get('auth')%}
-                    <a class="nav-link active" href="{{ url_for('logout') }}">LogOut</a>
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#StaticLogOut">
+                        Log Out
+                    </button>
                 {% else %}
-                    <a class="nav-link active" href="{{ url_for('signup') }}">SignUp</a>
-                    <a class="nav-link active" href="{{ url_for('login') }}">LogIn</a>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaticLogin">
+                        Log In
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaticSignUp">
+                        Sign Up
+                    </button>
+
                 {% endif %}
             </div>
         </div>
     </div>
 </nav>
 
+<! Navbar----------------------------->
+
 <div class="h4 pb-2 mb-4 text-danger border-top border-dark"></div>
+
+<! LogIn, SignUp, LogOut----------------------------->
+
+<div class="modal fade" id="StaticLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="row g-3" method="post" action="{{ url_for('login') }}">
+                        <div class="mb-3">
+                            <label for="InputUserName" class="form-label">Никнейм</label>
+                            <input type="text" class="form-control" name="user_name" id="InputUserName">
+                        </div>
+                        <div class="mb-3">
+                           <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+                           <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                           <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+                        </div>
+                        <div class="mb-3">
+                           <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                           <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Авторизоваться</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="StaticSignUp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="row g-3" method="post" action="{{ url_for('signup') }}">
+                        <div class="mb-3">
+                            <label for="InputUserName" class="form-label">Никнейм</label>
+                            <input type="text" class="form-control" name="user_name" id="InputUserName">
+                        </div>
+                        <div class="mb-3">
+                           <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+                           <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                           <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                           <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                           <input name="password1" type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                           <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                           <input name="password2" type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="StaticLogOut" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h3>Вы уверены, что хотите выйти?</h3>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="{{ url_for('logout') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-danger">Выйти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<! LogIn, SignUp, LogOut----------------------------->
 
 {% block content %}
 {% endblock %}
