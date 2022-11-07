@@ -48,18 +48,13 @@ cur.execute('CREATE TABLE IF NOT EXISTS ingredients('
             'id SERIAL PRIMARY KEY, '
             'name varchar(50) NOT NULL, '
             'measure_unit varchar(25) NOT NULL, '
-            'quantity int NOT NULL, '
+            'quantity int NOT NULL DEFAULT 1, '
             'recipe_id int REFERENCES recipe(id) ON DELETE CASCADE'
             ');'
             )
 
-cur.execute('CREATE TABLE IF NOT EXISTS favorite_recipe('
-            'id SERIAL PRIMARY KEY, '
-            'recipe_id int REFERENCES recipe(id) ON DELETE CASCADE, '
-            'user_site_id int REFERENCES user_site(id) ON DELETE CASCADE '
-            ');'
-            )
-
+cur.execute('ALTER TABLE ingredients '
+            'ALTER COLUMN quantity SET DEFAULT 1')
 
 def fill_users(num):
     """

@@ -28,6 +28,8 @@ def connect_db():
 	return connection
 
 
+# def insert_db()
+
 # def select():
 # 	command = 'SELECT %s FROM %s'
 
@@ -133,21 +135,23 @@ def add_recipe():
 		name_recipe = request.form.get('name_recipe')
 		addition = request.form.get('addition')
 		number_of_serving = request.form.get('number_of_serving')
-		cooking_hour = request.form.get('cooking_hour')
+		cooking_hour = request.form.getlist('cooking_hour')
 		cooking_minute = request.form.get('cooking_minute')
-
+		type_recipe = request.form.get('type_recipe')
+		print(name_recipe)
 		con = connect_db()
 		cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-		cur.execute('INSERT INTO recipe (name, addition, number_of_serving, cooking_hour, cooking_minute, user_site_id)'
-					'VALUES (%s, %s, %s, %s, %s, %s) RETURNING id',
-					(name_recipe, addition, number_of_serving, cooking_hour, cooking_minute, session.get('id'))
-					)
-		id_recipe = cur.fetchone()['id']
+		# cur.execute('INSERT INTO recipe (name, addition, number_of_serving, cooking_hour, cooking_minute, user_site_id,'
+		# 			'condition, type)'
+		# 			'VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id',
+		# 			(name_recipe, addition, number_of_serving, cooking_hour, cooking_minute, session.get('id'),
+		# 			 'On moderation', type_recipe))
+		# id_recipe = cur.fetchone()['id']
 		con.commit()
 
 		name_ingredient = request.form.getlist('name_ingredient[]')
-		measure_unit = request.form.get('measure_unit[]')
+		measure_unit = request.form.getlist('measure_unit[]')
 		quantity_ingredient = request.form.getlist('quantity_ingredient[]')
 
 
@@ -160,13 +164,13 @@ def add_recipe():
 
 		text_step = request.form.getlist('text_step[]')
 
-		for i in text_step:
-			cur.execute('INSERT INTO steps (text, recipe_id)'
-						'VALUES (%s, %s)',
-						(i, id_recipe)
-						)
-
-		con.commit()
+		# for i in text_step:
+		# 	cur.execute('INSERT INTO steps (text, recipe_id)'
+		# 				'VALUES (%s, %s)',
+		# 				(i, id_recipe)
+		# 				)
+		#
+		# con.commit()
 
 		cur.close()
 		con.close()
