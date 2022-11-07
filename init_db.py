@@ -13,7 +13,7 @@ cur = connection.cursor()
 cur.execute('CREATE TABLE IF NOT EXISTS user_site ('
             'id SERIAL PRIMARY KEY,'
             'user_name varchar(35) NOT NULL UNIQUE,'
-            'email varchar(55) NOT NULL,'
+            'email varchar(65) NOT NULL UNIQUE,'
             'password varchar(128) NOT NULL,'
             'created_at time WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,'
             'last_login time WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL'
@@ -22,14 +22,16 @@ cur.execute('CREATE TABLE IF NOT EXISTS user_site ('
 
 cur.execute('CREATE TABLE IF NOT EXISTS recipe('
             'id SERIAL PRIMARY KEY, '
+            'condition varchar(40),'
             'name varchar(200) NOT NULL, '
             'created_at time WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, '
             'update_at time WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, '
-            'addition text, '
+            'type varchar(50),'
+            'addition text,'
             'main_image varchar(250), '
-            'number_of_serving int, '
-            'cooking_hour int, '
-            'cooking_minute int, '
+            'number_of_serving int DEFAULT 1, '
+            'cooking_hour int DEFAULT 0, '
+            'cooking_minute int NOT NULL, '
             'user_site_id int REFERENCES user_site(id) ON DELETE CASCADE '
             ');'
             )
@@ -87,7 +89,7 @@ def fill_recipe():
 
 
 # fill_users(10)
-fill_recipe()
+# fill_recipe()
 connection.commit()
 cur.close()
 connection.close()
