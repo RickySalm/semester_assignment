@@ -5,24 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Рецепты</h2>
-    {% for recipe in recipes %}
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                          <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ recipe.name }}</h5>
-                        <p class="card-text">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                        <p class="card-text"><small class="text-muted">
-                            Время готовки: {{ recipe.cooking_hour }}ч. {{ recipe.cooking_minute }}мин. |
-                            {{ recipe.type }} | Порций: {{ recipe.number_of_serving }}</small></p>
+    <div class="ms-3">
+        <h2>Рецепты</h2>
+        {% for recipe in recipes %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                              <img src="..." class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.name }}</h5>
+                            <p class="card-text">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                            <p class="card-text"><small class="text-muted">
+                                Время готовки: {{ recipe.cooking_hour }}ч. {{ recipe.cooking_minute }}мин. |
+                                {{ recipe.type }} | Порций: {{ recipe.number_of_serving }}</small></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-
+        {% endfor %}
+    </div>
 {% endblock %}

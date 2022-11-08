@@ -1,118 +1,120 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <div class="ms-3">
-        <h3>Your new recipe:</h3>
-    </div>
-    <div class="ms-3">
-        <form action="{{ url_for('add_recipe') }}" method="post">
-            <div>
-                <div class="col-md-4 mb-3">
-                    <input required class="form-control" type="text" name="name_recipe" placeholder="Name of the recipe">
-                </div>
-                <span>number of servings</span>
-                <div class="div_number_of_serving input-group mb-3 col-1">
-                    <input readonly class="input_number_of_serving form-control" min='0' type="number" value="1" step="1" name="number_of_serving">
-                    <button class="button_del_serving btn btn-outline-secondary" type="button"> - </button>
-                    <button class="button_add_serving btn btn-outline-secondary" type="button"> + </button>
-                </div>
-                <div class="row g-3">
-                    <h4>cooking time</h4>
-                    <div class="col-1">
-                        <p>hours</p>
-                        <input class="form-control" min='0' max="24" type="number" value="0" step="1" name="cooking_hour">
-                    </div>
-                    <div class="col-1">
-                        <p>minutes</p>
-                        <input class="form-control" min='1' max="59" type="number" value="0" step="1" name="cooking_minute">
-                    </div>
-                </div>
-                <div class="mb-3 col-4">
-                    <label>addition</label>
-                    <textarea class="form-control" type="text" name="addition"></textarea>
-                </div>
-                <div class="div_type col-2 mb-3">
-                    <label>Категория блюда</label>
-                    <select id="type_recipe" class="form-control" name="type_recipe">
-                        <option value="Завтрак">Завтрак</option>
-                        <option value="Основное блюдо">Основное блюдо</option>
-                        <option value="Закуска">Закуска</option>
-                        <option value="Бульон">Бульон</option>
-                        <option value="Напиток">Напиток</option>
-                        <option value="Салат">Салат</option>
-                        <option value="Соус и маринад">Соус и маринад</option>
-                        <option value="Суп">Суп</option>
-                        <option value="Сэндвич">Сэндвич</option>
-                        <option value="Выпечка и десерты">Выпечка и десерты</option>
-                        <option value="Заготовки">Заготовки</option>
-                        <option value="Паста и пицца">Паста и пицца</option>
-                    </select>
-                </div>
+    <div class="add_recipe_main_window">
+        <div class="ms-3">
+            <h3>Your new recipe:</h3>
+        </div>
+        <div class="ms-3">
+            <form class="form-floating" action="{{ url_for('add_recipe') }}" method="post">
                 <div>
-                    <label>Свой тип</label>
-                    <input class="inactive_checkbox" id="type_checkbox" type="checkbox">
-                </div>
-            </div>
-
-            <div class="h4 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
-
-            <div class="block_ingredient_to_add mt-5 mb-3">
-                <h4>Ingredients</h4>
-                <div class="ingredient row g-3">
-                    <div class="col">
-                        <label>Name of the ingredient</label>
-                        <input required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">
+                    <div class="col-md-4 mb-3">
+                        <input required class="form-control" type="text" name="name_recipe" placeholder="Name of the recipe">
                     </div>
-                    <div class="col">
-                        <label>Quantity</label>
-                        <input value="1" class="input_quantity_ingredient form-control" min='0' type="number" name="quantity_ingredient[]">
+                    <span>number of servings</span>
+                    <div class="div_number_of_serving input-group mb-3 col-1">
+                        <input readonly class="input_number_of_serving form-control" min='0' type="number" value="1" step="1" name="number_of_serving">
+                        <button class="button_del_serving btn btn-outline-secondary" type="button"> - </button>
+                        <button class="button_add_serving btn btn-outline-secondary" type="button"> + </button>
                     </div>
-                    <div class="col">
-                        <label>Measure unit</label>
-                        <select class="select_measure_unit form-control" name="measure_unit[]">
-                            <option value="pcs">pcs</option>
-                            <option value="g">g</option>
-                            <option value="kg">kg</option>
-                            <option value="ml">ml</option>
-                            <option value="liter(s)">liter(s)</option>
-                            <option value="tbsp">tbsp</option>
-                            <option value="glass">glass</option>
-                            <option value="tsp">tsp</option>
+                    <div class="row g-3">
+                        <h4>cooking time</h4>
+                        <div class="col-1">
+                            <p>hours</p>
+                            <input class="form-control" min='0' max="24" type="number" value="0" step="1" name="cooking_hour">
+                        </div>
+                        <div class="col-1">
+                            <p>minutes</p>
+                            <input class="form-control" min='1' max="59" type="number" value="0" step="1" name="cooking_minute">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label>addition</label>
+                        <textarea class="form-control" type="text" name="addition"></textarea>
+                    </div>
+                    <div class="div_type col-2 mb-3">
+                        <label>Категория блюда</label>
+                        <select id="type_recipe" class="form-control" name="type_recipe">
+                            <option value="Завтрак">Завтрак</option>
+                            <option value="Основное блюдо">Основное блюдо</option>
+                            <option value="Закуска">Закуска</option>
+                            <option value="Бульон">Бульон</option>
+                            <option value="Напиток">Напиток</option>
+                            <option value="Салат">Салат</option>
+                            <option value="Соус и маринад">Соус и маринад</option>
+                            <option value="Суп">Суп</option>
+                            <option value="Сэндвич">Сэндвич</option>
+                            <option value="Выпечка и десерты">Выпечка и десерты</option>
+                            <option value="Заготовки">Заготовки</option>
+                            <option value="Паста и пицца">Паста и пицца</option>
                         </select>
                     </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-outline-primary button_add_ingredient">
-                    Добавить ингредиент
-                </button>
-            </div>
-
-            <div class="h4 pb-2 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
-
-            <div class="block_step_to_add mb-5 mt-5">
-                <h4>Step-by-step instructions</h4>
-                <div class="step row g-3">
-                    <div class=step_div>
-                        <span class="step_span">Step 1</span>
-                    </div>
-                    <div class="mb-3 col">
-                        <label>Image</label>
-                        <input class="form-control" type="file" accept="image/*" name="image_step[]">
-                    </div>
-                    <div class="col">
-                        <label>Text</label>
-                        <textarea class="form-control" type="text" name="text_step[]"></textarea>
+                    <div>
+                        <label>Свой тип</label>
+                        <input class="inactive_checkbox" id="type_checkbox" type="checkbox">
                     </div>
                 </div>
-            </div>
-            <div>
-                <button class="btn btn-outline-primary button_add_step">
-                    Добавить шаг
-                </button>
-            </div>
-            <button class="mt-3 btn btn-success" type="submit">Отправить на проверку</button>
-        </form>
+
+                <div class="h4 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+
+                <div class="block_ingredient_to_add mt-5 mb-3">
+                    <h4>Ingredients</h4>
+                    <div class="ingredient row g-3">
+                        <div class="col">
+                            <label>Name of the ingredient</label>
+                            <input required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">
+                        </div>
+                        <div class="col">
+                            <label>Quantity</label>
+                            <input value="1" class="input_quantity_ingredient form-control" min='0' type="number" name="quantity_ingredient[]">
+                        </div>
+                        <div class="col">
+                            <label>Measure unit</label>
+                            <select class="select_measure_unit form-control" name="measure_unit[]">
+                                <option value="pcs">pcs</option>
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">ml</option>
+                                <option value="liter(s)">liter(s)</option>
+                                <option value="tbsp">tbsp</option>
+                                <option value="glass">glass</option>
+                                <option value="tsp">tsp</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary button_add_ingredient">
+                        Добавить ингредиент
+                    </button>
+                </div>
+
+                <div class="h4 pb-2 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+
+                <div class="block_step_to_add mb-5 mt-5">
+                    <h4>Step-by-step instructions</h4>
+                    <div class="step row g-3">
+                        <div class=step_div>
+                            <span class="step_span">Step 1</span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label>Image</label>
+                            <input class="form-control" type="file" accept="image/*" name="image_step[]">
+                        </div>
+                        <div class="col">
+                            <label>Text</label>
+                            <textarea class="form-control" type="text" name="text_step[]"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-outline-primary button_add_step">
+                        Добавить шаг
+                    </button>
+                </div>
+                <button class="mt-3 btn btn-success" type="submit">Отправить на проверку</button>
+            </form>
+        </div>
     </div>
         <script type="text/javascript">
             $(document).ready(function() {

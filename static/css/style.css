@@ -7,3 +7,17 @@
 .div_number_of_serving {
     width: 17.333333%;
 }
+
+.add_recipe_main_window {
+    margin-left: 130px;
+    margin-right: 130px;
+    background-color: white;
+    padding-bottom: 10px;
+    padding-right: 14px;
+}
+
+.add_recipe_frame {
+    background-color: #dadada;
+    padding-top: 6px;
+    padding-bottom: 25px;
+}
