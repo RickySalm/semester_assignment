@@ -8,6 +8,7 @@
     <div class="ms-3">
         <h2>Рецепты</h2>
         {% for recipe in recipes %}
+            <a href="{{ url_for('recipe', id=recipe.id)}}">
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -24,6 +25,7 @@
                     </div>
                 </div>
             </div>
+            </a>
         {% endfor %}
     </div>
 {% endblock %}

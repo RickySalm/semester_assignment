@@ -4,20 +4,150 @@
     margin: 0;
 }
 
+
+
 .div_number_of_serving {
     width: 17.333333%;
 }
 
+.recipe_main_window {
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 6px;
+    background-color: white;
+    padding-bottom: 10px;
+    padding-right: 14px;
+}
+
 .add_recipe_main_window {
-    margin-left: 130px;
-    margin-right: 130px;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 6px;
     background-color: white;
     padding-bottom: 10px;
     padding-right: 14px;
 }
 
 .add_recipe_frame {
-    background-color: #dadada;
-    padding-top: 6px;
+    background-color: #f1f1f1;
     padding-bottom: 25px;
 }
+
+.step_card {
+    --bs-card-border-color: none;
+}
+
+.name_recipe {
+    font: 50px/50px Roboto,sans-serif;
+    font-weight: 900;
+    text-align: center;
+}
+
+.little_thing {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: left;
+    margin: 65px auto 25px;
+}
+
+.span_little_thing {
+    color: black;
+    -webkit-box-align: center;
+    align-items: center;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 11px;
+    line-height: 20px;
+    padding-right: 30px;
+    font-family: cursive, Georgia;
+}
+
+.block_little_thing {
+    width: 300px;
+}
+
+.icon {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    padding: 0px;
+}
+
+
+
+
+/*.emotion-yj4j4j {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    flex: 1 1 auto;*/
+/*    -webkit-box-align: center;*/
+/*    align-items: center;*/
+/*    break-inside: avoid;*/
+/*}*/
+
+/*.emotion-13pa6yw {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    flex: 1 1 auto;*/
+/*    -webkit-box-align: center;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.emotion-7yevpr {*/
+/*    position: relative;*/
+/*    margin: 2px 0px;*/
+/*    -webkit-box-flex: 0;*/
+/*    flex-grow: 0;*/
+/*    flex-shrink: 1;*/
+/*    text-overflow: ellipsis;*/
+/*    text-align: left;*/
+/*    display: block;*/
+/*    min-width: 99.996%;*/
+/*    height: 29px;*/
+/*    flex-basis: 99.996% !important;*/
+/*    overflow: visible !important;*/
+/*}*/
+
+/*.emotion-ydhjlb {*/
+/*    display: inline-flex;*/
+/*    -webkit-box-align: center;*/
+/*    align-items: center;*/
+/*    -webkit-box-pack: center;*/
+/*    justify-content: center;*/
+/*    width: 100%;*/
+/*    flex: 1 1 100%;*/
+/*}*/
+
+/*.emotion-1f5cedg {*/
+/*    -webkit-box-flex: 1;*/
+/*    flex-grow: 1;*/
+/*    border-bottom: 1px solid rgb(217, 217, 217);*/
+/*    height: 12px;*/
+/*    margin: 0px 10px !important;*/
+/*}*/
+
+/*.emotion-15im4d2 {*/
+/*    color: black;*/
+/*    -webkit-box-align: center;*/
+/*    align-items: center;*/
+/*    display: inline-flex;*/
+/*    -webkit-box-pack: center;*/
+/*    justify-content: center;*/
+/*    font-style: normal;*/
+/*    font-weight: normal;*/
+/*    line-height: 33px;*/
+/*    font-family: "PT Serif", sans-serif;*/
+/*    white-space: nowrap;*/
+/*    font-size: 13px;*/
+/*}*/

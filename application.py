@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, render_template, url_for, session, request, redirect, json
 from flask_session import Session
 from conf import DATABASE
@@ -18,6 +16,7 @@ Session(app)
 
 bcrypt = Bcrypt()
 
+
 def connect_db():
 	connection = psycopg2.connect(
 		host=DATABASE['host'],
@@ -28,16 +27,12 @@ def connect_db():
 	return connection
 
 
-# def insert_db()
-
-# def select():
-# 	command = 'SELECT %s FROM %s'
-
 @app.route('/logout')
 def logout():
 	session['auth'] = False
 	# session.clear()
 	return redirect('main')
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -111,6 +106,25 @@ def profile():
 		con.close()
 		return render_template('profile.html', recipes=recipes)
 	return redirect('signup')
+
+
+@app.route('/recipe/<id>')
+def recipe(id):
+	con = connect_db()
+	cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+	cur.execute('SELECT * FROM recipe WHERE id=%s', (id,))
+	recipe = cur.fetchall()
+
+	cur.execute('SELECT * FROM steps WHERE recipe_id=%s', (id,))
+	steps = cur.fetchall()
+
+	cur.execute('SELECT * FROM ingredients WHERE recipe_id=%s', (id,))
+	ingredients = cur.fetchall()
+	print(ingredients)
+	cur.close()
+	con.close()
+	print(recipe)
+	return render_template('recipe.html', recipe=recipe, steps=steps, ingredients=ingredients)
 
 
 @app.route('/add_recipe', methods=['POST', 'GET'])
@@ -189,6 +203,7 @@ def add_recipe():
 
 		print(name_recipe,number_of_serving,cooking_hour,cooking_minute,addition,name_ingredient,quantity_ingredient,measure_unit,text_step)
 	return render_template('add_recipe.html')
+
 
 @app.route('/')
 @app.route('/main')
