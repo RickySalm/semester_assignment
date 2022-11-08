@@ -23,22 +23,25 @@
             <div class="navbar-nav">
 
                 <a class="nav-link active" aria-current="page" href="{{ url_for('main') }}">Main page</a>
-                <a class="nav-link active" href="{{ url_for ('add_recipe') }}">Add recipe</a>
-                <a class="nav-link active" href="{{ url_for ('profile') }}">Profile</a>
-                {% if session.get('auth')%}
+                {% if not session.get('auth') %}
+                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button" >Add recipe</a>
+                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button">Profile</a>
+                {% else %}
+                    <a class="nav-link active" href="{{ url_for ('add_recipe') }}">Add recipe</a>
+                    <a class="nav-link active" href="{{ url_for ('profile') }}">Profile</a>
+                {% endif %}
 
+                {% if session.get('auth')%}
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#StaticLogOut">
                         Log Out
                     </button>
                 {% else %}
-
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaticLogin">
                         Log In
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaticSignUp">
                         Sign Up
                     </button>
-
                 {% endif %}
             </div>
         </div>
@@ -55,7 +58,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Авторизация</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
@@ -78,7 +81,10 @@
                     </form>
                 </div>
             </div>
-            <div class="modal-footer">
+
+            <div class="modal-footer ">
+                <strong>Или</strong>
+                <a class="link-primary btn btn-outline-success" data-bs-toggle="modal" href="#StaticSignUp" role="button">Зарегестрироваться</a>
             </div>
         </div>
     </div>
@@ -89,7 +95,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Заголовок модального окна</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Регистрация</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
@@ -117,6 +123,8 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <strong>Или</strong>
+                <a class="link-primary btn btn-outline-success" data-bs-toggle="modal" href="#StaticLogin" role="button">Авторизоваться</a>
             </div>
         </div>
     </div>

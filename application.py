@@ -37,7 +37,7 @@ def connect_db():
 def logout():
 	session['auth'] = False
 	# session.clear()
-	return redirect('/')
+	return redirect('main')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -67,7 +67,8 @@ def login():
 		# TODO сделать сообщение, что вход не удался
 		cur.close()
 		con.close()
-	return render_template('login.html')
+	print(request.get_data())
+	return redirect('main')
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -96,7 +97,7 @@ def signup():
 			return redirect('main')
 		cur.close()
 		con.close()
-	return render_template('signup.html')
+	return redirect('main')
 
 
 @app.route('/profile')

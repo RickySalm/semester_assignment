@@ -83,8 +83,8 @@
                 </div>
             </div>
             <div class="mb-3">
-                <button class="button_add_ingredient">
-                    Add ingredient
+                <button class="btn btn-outline-primary button_add_ingredient">
+                    Добавить ингредиент
                 </button>
             </div>
 
@@ -107,11 +107,11 @@
                 </div>
             </div>
             <div>
-                <button class="button_add_step">
-                    Add step
+                <button class="btn btn-outline-primary button_add_step">
+                    Добавить шаг
                 </button>
             </div>
-            <button type="submit">Send</button>
+            <button class="mt-3 btn btn-success" type="submit">Отправить на проверку</button>
         </form>
     </div>
         <script type="text/javascript">
@@ -134,15 +134,15 @@
             '                        <textarea class="form-control" type="text" name="text_step[]"></textarea>\n' +
             '                    </div>\n' +
             '                    <div class="col-3">\n' +
-            '                        <button type="button" class="remove_button">Удалить</button>\n' +
+            '                        <button type="button" class="remove_step_button btn btn-dark">Удалить</button>\n' +
             '                    </div>\n' +
             '                </div>');
                 });
 
-                $('.block_step_to_add').on('click', '.remove_button', function (e) {
+                $('.block_step_to_add').on('click', '.remove_step_button', function (e) {
                     e.preventDefault();
                     count--;
-                    $(this).parent('div').remove();
+                    $(this).parent('div').parent('div').remove();
                     for (var i = 0; i < count; i++) {
                         var j = i+1
                         $('.step_span').eq(i).text('Step ' + j)
@@ -187,7 +187,7 @@
         '                            <option value="tsp">tsp</option>\n' +
         '                        </select>\n' +
         '                    </div>\n' +
-        '                        <button type="button" class="remove_button">Delete</button>\n' +
+        '                        <button type="button" class="remove_ingredient_button btn btn-dark">Delete</button>\n' +
         '                </div>')
                 });
 
@@ -206,7 +206,7 @@
                     }
                 });
 
-                $('.block_ingredient_to_add').on('click', '.remove_button', function (e){
+                $('.block_ingredient_to_add').on('click', '.remove_ingredient_button', function (e){
                     e.preventDefault();
                     $(this).parent('div').remove();
                 });
