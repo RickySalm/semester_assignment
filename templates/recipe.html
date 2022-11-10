@@ -41,37 +41,10 @@
                     </div>
                 </div>
 
-{#                <div class="container">#}
-{#                    {% for ingredient in ingredients %}#}
-{#                    <div class="emotion-yj4j4j">#}
-{#                        <div class="emotion-13pa6yw">#}
-{##}
-{#                                <div class="emotion-7yevpr">#}
-{#                                    <div class="emotion-ydhjlb"></div>#}
-{#                                        <div class="emotion-bjn8wh">#}
-{#                                            <span>{{ ingredient.name }}</span>#}
-{#                                        </div>#}
-{#                                        <span class="emotion-1f5cedg"></span>#}
-{#                                        <span class="emotion-15im4d2">{{ ingredient.quantity }} {{ ingredient.measure_unit }}</span>#}
-{#                                </div>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-
-{#                <div class="container">#}
-{#                    <ul class="list-group">#}
-{#                        {% for ingredient in ingredients %}#}
-{#                          <li class="list-group-item">{{ ingredient.name }} {{ ingredient.quantity }} {{ ingredient.measure_unit }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
-{#                </div>#}
-
                 <div class="container">
-                    <div>
+                    <div class="list-group">
                         {% for ingredient in ingredients %}
-                          <li>{{ ingredient.name }} {{ ingredient.quantity }} {{ ingredient.measure_unit }}</li>
+                          <li class="list-group-item" >{{ ingredient.name }} {{ ingredient.quantity }} {{ ingredient.measure_unit }}</li>
                         {% endfor %}
                     </div>
                 </div>

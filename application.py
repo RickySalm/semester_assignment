@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, request, redirect, json
+from flask import Flask, render_template, session, request, redirect
 from flask_session import Session
 from conf import DATABASE
 import psycopg2
@@ -30,13 +30,11 @@ def connect_db():
 @app.route('/logout')
 def logout():
 	session['auth'] = False
-	# session.clear()
 	return redirect('main')
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-	#TODO добавить флеши сообщения если что-то не введено
 	if request.method == 'POST':
 		# Берем из формы логин и пароль
 		user_name = request.form.get('user_name')
@@ -59,7 +57,6 @@ def login():
 			return redirect('main')
 		# Если пользователя нет в БД или пароль не совпадает,
 		# оставляем на той же странице и предупреждаем что авторизация не удалась
-		# TODO сделать сообщение, что вход не удался
 		cur.close()
 		con.close()
 	print(request.get_data())
@@ -68,8 +65,6 @@ def login():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-	# TODO: сделать вывод ошибки если user существует
-	# TODO: сделать signup всплывающим окном
 	if request.method == 'POST':
 		user_name = request.form.get('user_name')
 		email = request.form.get('email')
@@ -133,21 +128,6 @@ def add_recipe():
 		return redirect('signup')
 	elif request.method == 'POST':
 		print('прошел')
-		#TODO отправка форм в бд
-		#TODO название не должно быть пустым
-		#TODO минуты тоже не ложны быть пустыми
-
-		#TODO сначала заполняем в БД рецепт, потом ингредиенты,
-		# потом просматриваем request.files на наличие фото и с этими фото заполняем
-		# шаги. Если все ок отправляем на страницу модерации
-
-		#TODO добавить значение по вкусу, тогда значения кол-во убирается
-
-		#TODO при обновлении страницы, отправляется форма, исправить
-
-		#TODO в ингредиентах кол-во и единица измерения появлентся только тогда когда заполнен name
-
-		# Могут быть пустыми( )
 		name_recipe = request.form.get('name_recipe')
 		addition = request.form.get('addition')
 		number_of_serving = request.form.get('number_of_serving')
@@ -208,10 +188,6 @@ def add_recipe():
 @app.route('/')
 @app.route('/main')
 def main():
-	""" Вывод всех рецептов
-	Сортировка(по времени готовки, по типу рецепта, ВОЗМОЖНО ПО ЦЕНЕ)
-	Поиск по названиям
-	"""
 	print(session.get('id'))
 	con = connect_db()
 	cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
