@@ -3,33 +3,33 @@
 {% block content %}
     <div class="add_recipe_main_window">
         <div class="ms-3">
-            <h3>Your new recipe:</h3>
+            <h3>Ваш рецепт:</h3>
         </div>
         <div class="ms-3">
             <form class="form-floating" action="{{ url_for('add_recipe') }}" method="post">
                 <div>
                     <div class="col-md-4 mb-3">
-                        <input required class="form-control" type="text" name="name_recipe" placeholder="Name of the recipe">
+                        <input required class="form-control" type="text" name="name_recipe" placeholder="Название рецепта">
                     </div>
-                    <span>number of servings</span>
+                    <span>Кол-во порций</span>
                     <div class="div_number_of_serving input-group mb-3 col-1">
                         <input readonly class="input_number_of_serving form-control" min='0' type="number" value="1" step="1" name="number_of_serving">
                         <button class="button_del_serving btn btn-outline-secondary" type="button"> - </button>
                         <button class="button_add_serving btn btn-outline-secondary" type="button"> + </button>
                     </div>
                     <div class="row g-3">
-                        <h4>cooking time</h4>
+                        <h4>Время готовки</h4>
                         <div class="col-1">
-                            <p>hours</p>
+                            <p>час(ов)</p>
                             <input class="form-control" min='0' max="24" type="number" value="0" step="1" name="cooking_hour">
                         </div>
                         <div class="col-1">
-                            <p>minutes</p>
+                            <p>минут</p>
                             <input class="form-control" min='1' max="59" type="number" value="0" step="1" name="cooking_minute">
                         </div>
                     </div>
                     <div class="mb-3 col-4">
-                        <label>addition</label>
+                        <label>Дополнение</label>
                         <textarea class="form-control" type="text" name="addition"></textarea>
                     </div>
                     <div class="div_type col-2 mb-3">
@@ -58,18 +58,18 @@
                 <div class="h4 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
 
                 <div class="block_ingredient_to_add mt-5 mb-3">
-                    <h4>Ingredients</h4>
+                    <h4>Ингредиенты</h4>
                     <div class="ingredient row g-3">
                         <div class="col">
-                            <label>Name of the ingredient</label>
+                            <label>Название ингредиента</label>
                             <input required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">
                         </div>
                         <div class="col">
-                            <label>Quantity</label>
+                            <label>Кол-во</label>
                             <input value="1" class="input_quantity_ingredient form-control" min='0' type="number" name="quantity_ingredient[]">
                         </div>
                         <div class="col">
-                            <label>Measure unit</label>
+                            <label>Ед. измерения</label>
                             <select class="select_measure_unit form-control" name="measure_unit[]">
                                 <option value="pcs">pcs</option>
                                 <option value="g">g</option>
@@ -92,17 +92,17 @@
                 <div class="h4 pb-2 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
 
                 <div class="block_step_to_add mb-5 mt-5">
-                    <h4>Step-by-step instructions</h4>
+                    <h4>Пошаговая инструкция</h4>
                     <div class="step row g-3">
                         <div class=step_div>
-                            <span class="step_span">Step 1</span>
+                            <span class="step_span">Шаг 1</span>
                         </div>
                         <div class="mb-3 col">
-                            <label>Image</label>
+                            <label>Картинка</label>
                             <input class="form-control" type="file" accept="image/*" name="image_step[]">
                         </div>
                         <div class="col">
-                            <label>Text</label>
+                            <label>Текст</label>
                             <textarea class="form-control" type="text" name="text_step[]"></textarea>
                         </div>
                     </div>
@@ -125,14 +125,14 @@
                     count++;
                     $('.block_step_to_add').append('                <div class="step row g-3">\n' +
             '                    <div class=step_div>' +
-            '                        <span class="step_span" >Step ' + count + '</span>' +
+            '                        <span class="step_span" >Шаг ' + count + '</span>' +
             '                    </div>' +
             '                    <div class="mb-3 col">\n' +
-            '                        <label>Image</label>\n' +
+            '                        <label>Картинка</label>\n' +
             '                        <input class="form-control" type="file" accept="image/*" name="image_step[]">\n' +
             '                    </div>\n' +
             '                    <div class="col">\n' +
-            '                        <label>Text</label>\n' +
+            '                        <label>Текст</label>\n' +
             '                        <textarea class="form-control" type="text" name="text_step[]"></textarea>\n' +
             '                    </div>\n' +
             '                    <div class="col-3">\n' +
@@ -169,15 +169,15 @@
                     e.preventDefault();
                     $('.block_ingredient_to_add').append('<div class="ingredient row g-3">\n' +
         '                    <div class="col">\n' +
-        '                        <label>Name of the ingredient</label>\n' +
+        '                        <label>Название ингредиента</label>\n' +
         '                        <input required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">\n' +
         '                    </div>\n' +
         '                    <div class="col">\n' +
-        '                        <label>Quantity</label>\n' +
+        '                        <label>Кол-во</label>\n' +
         '                        <input  class="input_quantity_ingredient form-control" value="1" min=\'0\' type="number" name="quantity_ingredient[]">\n' +
         '                    </div>\n' +
         '                    <div class="col">\n' +
-        '                        <label>Measure unit</label>\n' +
+        '                        <label>Ед. измерения</label>\n' +
         '                        <select  class="select_measure_unit form-control" name="measure_unit[]">\n' +
         '                            <option value="pcs">pcs</option>\n' +
         '                            <option value="g">g</option>\n' +
@@ -189,7 +189,7 @@
         '                            <option value="tsp">tsp</option>\n' +
         '                        </select>\n' +
         '                    </div>\n' +
-        '                        <button type="button" class="remove_ingredient_button btn btn-dark">Delete</button>\n' +
+        '                        <button type="button" class="remove_ingredient_button btn btn-dark">Удалить</button>\n' +
         '                </div>')
                 });
 
@@ -213,6 +213,13 @@
                     $(this).parent('div').remove();
                 });
 
+                //$('.input_name_ingredient').on('input keyup', function(){
+                //    $('.input_quantity_ingredient').removeAttr('disabled');
+                //    $('.select_measure_unit').removeAttr('disabled');
+                //});
+
+
+                //СДЕЛАТЬ ПРОВЕРКУ ОДИНАКОВОГО ЧИСЛА ИНГРЕДИЕНТОВ НА JQUERY
 
             });
         </script>

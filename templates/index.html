@@ -22,13 +22,13 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
 
-                <a class="nav-link active" aria-current="page" href="{{ url_for('main') }}">Main page</a>
+                <a class="nav-link active" aria-current="page" href="{{ url_for('main') }}">Главная</a>
                 {% if not session.get('auth') %}
-                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button" >Add recipe</a>
-                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button">Profile</a>
+                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button" >Добавить рецепт</a>
+                    <a class="nav-link active" data-bs-toggle="modal" href="#StaticLogin" role="button">Профиль</a>
                 {% else %}
-                    <a class="nav-link active" href="{{ url_for ('add_recipe') }}">Add recipe</a>
-                    <a class="nav-link active" href="{{ url_for ('profile') }}">Profile</a>
+                    <a class="nav-link active" href="{{ url_for ('add_recipe') }}">Добавить рецепт</a>
+                    <a class="nav-link active" href="{{ url_for ('profile') }}">Профиль</a>
                 {% endif %}
 
                 {% if session.get('auth')%}
