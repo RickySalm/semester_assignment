@@ -6,11 +6,15 @@
             <h3>Ваш рецепт:</h3>
         </div>
         <div class="ms-3">
-            <form class="form-floating" action="{{ url_for('add_recipe') }}" method="post">
+            <form enctype="multipart/form-data" class="form-floating" action="{{ url_for('add_recipe') }}" method="post">
                 <div>
                     <div class="col-md-4 mb-3">
                         <input required class="form-control" type="text" name="name_recipe" placeholder="Название рецепта">
                     </div>
+                        <div class="mb-3 col">
+                            <label>Главная картинка</label>
+                            <input class="form-control" type="file" accept="image/*" name="main_image">
+                        </div>
                     <span>Кол-во порций</span>
                     <div class="div_number_of_serving input-group mb-3 col-1">
                         <input readonly class="input_number_of_serving form-control" min='0' type="number" value="1" step="1" name="number_of_serving">

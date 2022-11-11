@@ -46,7 +46,8 @@
                 <div class="container">
                     <div class="list-group">
                         {% for ingredient in ingredients %}
-                          <li class="list-group-item" >{{ ingredient.name }} {{ ingredient.quantity }} {{ ingredient.measure_unit }}</li>
+                          <li class="list-group-item" >{{ ingredient.name }} {{ ingredient.quantity }} {{ ingredient.measure_unit }}
+                              (цена в магазине: {{ price[ingredient.name] }}₽)</li>
                         {% endfor %}
                     </div>
                 </div>

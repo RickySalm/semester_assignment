@@ -1,0 +1,266 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% for recipe_info in recipe %}
+    <div class="add_recipe_main_window">
+        <div class="ms-3">
+            <h3>(Редактирование) Ваш рецепт:</h3>
+        </div>
+        <div class="ms-3">
+            <form class="form-floating" action="{{ url_for('add_recipe', rid=recipe_info.id) }}" method="post">
+                <div>
+                    <div class="col-md-4 mb-3">
+                        <input required class="form-control" type="text" name="name_recipe" value="{{ recipe_info.name }}" placeholder="Название рецепта">
+                    </div>
+                    <span>Кол-во порций</span>
+                    <div class="div_number_of_serving input-group mb-3 col-1">
+                        <input readonly class="input_number_of_serving form-control" min='0' type="number" value="{{ recipe_info.number_of_serving }}" step="1" name="number_of_serving">
+                        <button class="button_del_serving btn btn-outline-secondary" type="button"> - </button>
+                        <button class="button_add_serving btn btn-outline-secondary" type="button"> + </button>
+                    </div>
+                    <div class="row g-3">
+                        <h4>Время готовки</h4>
+                        <div class="col-1">
+                            <p>час(ов)</p>
+                            <input class="form-control" min='0' max="24" type="number" value="{{ recipe_info.cooking_hour }}" step="1" name="cooking_hour">
+                        </div>
+                        <div class="col-1">
+                            <p>минут</p>
+                            <input class="form-control" min='1' max="59" type="number" value="{{ recipe_info.cooking_minute }}" step="1" name="cooking_minute">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label>Дополнение</label>
+                        <textarea class="form-control" type="text" name="addition">{{ recipe_info.addition }}</textarea>
+                    </div>
+                    <div class="div_type col-2 mb-3">
+                        <label>Категория блюда</label>
+                        <select id="type_recipe" class="form-control" name="type_recipe">
+                            <option hidden value="{{ recipe_info.type }}">{{ recipe_info.type }}</option>
+                            <option value="Завтрак">Завтрак</option>
+                            <option value="Основное блюдо">Основное блюдо</option>
+                            <option value="Закуска">Закуска</option>
+                            <option value="Бульон">Бульон</option>
+                            <option value="Напиток">Напиток</option>
+                            <option value="Салат">Салат</option>
+                            <option value="Соус и маринад">Соус и маринад</option>
+                            <option value="Суп">Суп</option>
+                            <option value="Сэндвич">Сэндвич</option>
+                            <option value="Выпечка и десерты">Выпечка и десерты</option>
+                            <option value="Заготовки">Заготовки</option>
+                            <option value="Паста и пицца">Паста и пицца</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Свой тип</label>
+                        <input class="inactive_checkbox" id="type_checkbox" type="checkbox">
+                    </div>
+                </div>
+
+                <div class="h4 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+                <div class="block_ingredient_to_add mt-5 mb-3">
+                    <h4>Ингредиенты</h4>
+                    {% for ingredient in ingredients %}
+                    <div class="ingredient row g-3">
+                        <div class="col">
+                            <label>Название ингредиента</label>
+                            <input value="{{ ingredient.name }}" required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">
+                        </div>
+                        <div class="col">
+                            <label>Кол-во</label>
+                            <input value="{{ ingredient.quantity }}" class="input_quantity_ingredient form-control" min='0' type="number" name="quantity_ingredient[]">
+                        </div>
+                        <div class="col">
+                            <label>Ед. измерения</label>
+                            <select class="select_measure_unit form-control" name="measure_unit[]">
+                                <option hidden value="{{ ingredient.measure_unit }}">{{ ingredient.measure_unit }}</option>
+                                <option value="pcs">pcs</option>
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">ml</option>
+                                <option value="liter(s)">liter(s)</option>
+                                <option value="tbsp">tbsp</option>
+                                <option value="glass">glass</option>
+                                <option value="tsp">tsp</option>
+                            </select>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary button_add_ingredient">
+                        Добавить ингредиент
+                    </button>
+                </div>
+
+                <div class="h4 pb-2 mb-4 text-danger border-bottom border-secondary position-absolute start-50 translate-middle" style="width: 97%;"></div>
+
+                <div class="block_step_to_add mb-5 mt-5">
+                    <h4>Пошаговая инструкция</h4>
+                    {% for step in steps %}
+                    <div class="step row g-3">
+                        <div class=step_div>
+                            <span class="step_span">Шаг 1</span>
+                        </div>
+                        <div class="mb-3 col">
+                            <label>Картинка</label>
+                            <input class="form-control" type="file" accept="image/*" name="image_step[]">
+                        </div>
+                        <div class="col">
+                            <label>Текст</label>
+                            <textarea class="form-control" type="text" name="text_step[]">{{ step.text }}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <button class="btn btn-outline-primary button_add_step">
+                        Добавить шаг
+                    </button>
+                </div>
+                <button class="mt-3 btn btn-success" type="submit">Отправить на проверку</button>
+            </form>
+            <a class="btn btn-danger mt-3" data-bs-toggle="modal" href="#DeleteRecipe" role="button">Удалить рецепт</a>
+        </div>
+    </div>
+
+<! modal delete recipe>
+    <div class="modal fade" id="DeleteRecipe" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h3>Вы уверены, что хотите удалить рецепт?</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" action="{{ url_for('delete_recipe', rid=recipe_info.id) }}">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<! modal delete recipe>
+    {% endfor %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var count_ingredients = $('.ingredient').length
+                var count_step = $('.step').length
+
+
+                if (count_ingredients > 1){
+                    $('.ingredient:not(:first)').append('<button type="button" class="remove_ingredient_button btn btn-dark">Удалить</button>');
+                }
+
+                if (count_step > 1){
+                    for (var i = 1; i < count_step; i++) {
+                        var j = i+1
+                        $('.step').eq(i).append('<div class="col-3">\n' +
+            '                        <button type="button" class="remove_step_button btn btn-dark">Удалить</button>\n' +
+            '                    </div>');
+                        $('.step_span').eq(i).text('Шаг ' + j)
+                    }
+                }
+
+                $('.button_add_step').click(function(e) {
+                    e.preventDefault();
+                    count_step++;
+                    $('.block_step_to_add').append('                <div class="step row g-3">\n' +
+            '                    <div class=step_div>' +
+            '                        <span class="step_span" >Шаг ' + count_step + '</span>' +
+            '                    </div>' +
+            '                    <div class="mb-3 col">\n' +
+            '                        <label>Картинка</label>\n' +
+            '                        <input class="form-control" type="file" accept="image/*" name="image_step[]">\n' +
+            '                    </div>\n' +
+            '                    <div class="col">\n' +
+            '                        <label>Текст</label>\n' +
+            '                        <textarea class="form-control" type="text" name="text_step[]"></textarea>\n' +
+            '                    </div>\n' +
+            '                    <div class="col-3">\n' +
+            '                        <button type="button" class="remove_step_button btn btn-dark">Удалить</button>\n' +
+            '                    </div>\n' +
+            '                </div>');
+                });
+
+                $('.block_step_to_add').on('click', '.remove_step_button', function (e) {
+                    e.preventDefault();
+                    count_step;
+                    $(this).parent('div').parent('div').remove();
+                    for (var i = 0; i < count_step; i++) {
+                        var j = i+1
+                        $('.step_span').eq(i).text('Шаг ' + j)
+                    }
+                });
+
+                $('.button_add_serving').click(function() {
+                    var value = $('.input_number_of_serving').val();
+                    value++;
+                    $('.input_number_of_serving').val(value);
+                });
+
+                $('.button_del_serving').click(function() {
+                    var value = $('.input_number_of_serving').val();
+                    if (value > 1) {
+                        value--;
+                        $('.input_number_of_serving').val(value);
+                    }
+                });
+
+                $('.button_add_ingredient').click(function(e){
+                    e.preventDefault();
+                    $('.block_ingredient_to_add').append('<div class="ingredient row g-3">\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Название ингредиента</label>\n' +
+        '                        <input required class="input_name_ingredient form-control" type="text" name="name_ingredient[]">\n' +
+        '                    </div>\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Кол-во</label>\n' +
+        '                        <input  class="input_quantity_ingredient form-control" value="1" min=\'0\' type="number" name="quantity_ingredient[]">\n' +
+        '                    </div>\n' +
+        '                    <div class="col">\n' +
+        '                        <label>Ед. измерения</label>\n' +
+        '                        <select  class="select_measure_unit form-control" name="measure_unit[]">\n' +
+        '                            <option value="pcs">pcs</option>\n' +
+        '                            <option value="g">g</option>\n' +
+        '                            <option value="kg">kg</option>\n' +
+        '                            <option value="ml">ml</option>\n' +
+        '                            <option value="liter(s)">liter(s)</option>\n' +
+        '                            <option value="tbsp">tbsp</option>\n' +
+        '                            <option value="glass">glass</option>\n' +
+        '                            <option value="tsp">tsp</option>\n' +
+        '                        </select>\n' +
+        '                    </div>\n' +
+        '                        <button type="button" class="remove_ingredient_button btn btn-dark">Удалить</button>\n' +
+        '                </div>')
+                });
+
+                $('#type_checkbox').click(function(){
+                    if ($(this).hasClass('inactive_checkbox')){
+                    $('.div_type').append('<div>' +
+        '                   <input required class="input_own_type form-control" type="text" name="own_type_recipe">' +
+        '                </div>');
+                    $('#type_recipe').attr('disabled', '');
+                    $(this).toggleClass('active_checkbox inactive_checkbox');
+                    }
+                    else {
+                        $('.input_own_type').remove();
+                    $('#type_recipe').removeAttr('disabled');
+                    $(this).toggleClass('inactive_checkbox active_checkbox');
+                    }
+                });
+
+                $('.block_ingredient_to_add').on('click', '.remove_ingredient_button', function (e){
+                    e.preventDefault();
+                    $(this).parent('div').remove();
+                });
+            });
+        </script>
+
+{% endblock %}
